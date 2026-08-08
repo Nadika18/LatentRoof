@@ -1,6 +1,6 @@
 # LatentRoof
 
-**Cross-GPU latency prediction from StableHLO + public hardware specs.**
+**Cross-architecture latency prediction from StableHLO + public hardware specs.**
 
 LatentRoof predicts operator / block level and end-to-end latency on an unseen NVIDIA GPU without running
 the target compiler schedule or profiling the target device at inference. A GNN encodes
