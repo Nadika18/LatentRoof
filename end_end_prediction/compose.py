@@ -12,10 +12,12 @@ Overhead-amortized modes:
 Usage (from end_end_prediction/):
   python3 compose.py \\
       --checkpoint artifacts/e2e_all_h128.pt \\
-      --groundtruth ../data/e2e_groundtruth_<ts>/results.json \\
-      --coverage-graphs ../data/e2e_coverage_<ts>/graphs \\
+      --groundtruth data/e2e_groundtruth/rtx_pro_6000.json \\
+      --coverage-graphs data/e2e_coverage_graphs \\
       --compose-mode amortize_launch \\
       --output artifacts/compose_amortize_launch_rtx.json
+
+Raw XLA dump trees are not required — only StableHLO graphs + ground-truth JSON.
 """
 from __future__ import annotations
 
