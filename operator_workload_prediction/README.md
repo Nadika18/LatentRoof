@@ -1,7 +1,20 @@
 # Operator / block-level workload prediction
 
 Predict latency of StableHLO operator and Transformer-block graphs on an unseen
-GPU using only the graph and public hardware specifications.
+(**test**) GPU using only the graph and public hardware specifications.
+
+## Dataset (included under `data/`)
+
+| | |
+|---|---|
+| Rows | **6,778** latency measurements |
+| Configs / graphs | **2,593** unique configs · **2,292** unique StableHLO graphs |
+| GPUs | H200 NVL · RTX PRO 6000 · GB10 |
+| Dtypes | FP32, FP16, BF16 |
+| Families (11) | `gemm`, `batchmatmul`, `gelu`, `softmax`, `layernorm`, `residual`, `feedforward`, `attention`, `mha`, `mlp3`, `transformer` |
+
+Rows include measured latency plus optional privileged XLA labels used only as
+training targets. See [`DATA.md`](DATA.md) for conversion / split rules.
 
 ## Layout
 
@@ -18,11 +31,11 @@ Optional remasure: [`collection/`](../collection/).
 
 ## Quick results (LOGO, $d=128$, mean OOD MAPE)
 
-| Hold out | OOD MAPE |
+| Test GPU | OOD MAPE |
 |---|---:|
 | GB10 | 12.2% |
 | H200 | 14.3% |
-| RTX | 17.6% |
+| RTX PRO 6000 | 17.6% |
 
 ## Train
 
