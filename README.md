@@ -1,8 +1,8 @@
 # LatentRoof
 
-**Schedule-free cross-GPU latency prediction from StableHLO + public hardware specs.**
+**Cross-GPU latency prediction from StableHLO + public hardware specs.**
 
-LatentRoof predicts operator / block latency on an unseen NVIDIA GPU without running
+LatentRoof predicts operator / block level and end-to-end latency on an unseen NVIDIA GPU without running
 the target compiler schedule or profiling the target device at inference. A GNN encodes
 the StableHLO graph; an MLP encodes public hardware resources; fused latents drive a
 **dual-peak analytical roofline** plus a non-negative residual. Privileged XLA labels
