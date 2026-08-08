@@ -19,7 +19,7 @@ blocks so those shapes are in-distribution.
 - `artifacts/` — checkpoints, compose JSON, poster PNGs
 
 Full steps: repo-root [`REPRODUCE.md`](../REPRODUCE.md).  
-Raw **XLA dump trees are not shipped** (labels are already inside `measurements.jsonl`).  
+Raw **XLA dump trees are not included** (labels are already inside `measurements.jsonl`).  
 Optional remasure: [`collection/`](../collection/).
 
 ## Compose modes

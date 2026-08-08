@@ -2,7 +2,7 @@
 
 Scripts to **re-measure** latencies on a live NVIDIA GPU (JAX / XLA).
 
-If you only want to train / compose, skip this folder and use the shipped
+If you only want to train / compose, skip this folder and use the included
 `data/` under each experiment package — see [`../REPRODUCE.md`](../REPRODUCE.md).
 
 ## XLA dumps (local only — not in the GitHub repo)

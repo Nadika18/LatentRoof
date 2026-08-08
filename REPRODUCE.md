@@ -2,7 +2,7 @@
 
 This guide covers:
 
-1. **Path A — no GPU:** retrain / evaluate / compose from shipped data  
+1. **Path A — no GPU:** retrain / evaluate / compose from included data  
 2. **Path B — with GPU:** re-collect measurements (including local XLA dumps), convert, then train  
 
 Hyper-parameters used for reported mainline numbers (both experiment folders):
@@ -51,7 +51,7 @@ Optional GPU train: install a CUDA build of PyTorch and set `DEVICE=cuda` when r
 
 ---
 
-## Path A — reproduce from shipped data (no GPU)
+## Path A — reproduce from included data (no GPU)
 
 ### A1. Operator / block leave-one-GPU-out (LOGO)
 
@@ -62,7 +62,7 @@ pip install -e .
 # Train all three folds (writes artifacts/*_h128.pt)
 bash scripts/run_train_logo.sh
 
-# Or evaluate a shipped checkpoint on the held-out GPU
+# Or evaluate an included checkpoint on the held-out GPU
 PYTHONPATH=. python -m schedule_free_perf.cli evaluate \
   data/measurements.jsonl \
   --hardware-dir hardware \
@@ -92,7 +92,7 @@ bash scripts/run_train.sh
 ### A3. End-to-end compose (grade vs ground truth)
 
 ```bash
-# Uses shipped GT + coverage StableHLO (not XLA dumps)
+# Uses included GT + coverage StableHLO (not XLA dumps)
 bash scripts/run_compose.sh
 # default MODE=amortize_launch
 # -> artifacts/compose_amortize_launch_rtx.json
@@ -121,7 +121,7 @@ python plot_e2e_poster.py
 # -> artifacts/poster_figs/e2e_mape_by_model_batch_amortize_launch.png
 ```
 
-Requires the `compose_amortize_launch_{rtx,h200}.json` files from A3 (or the shipped copies).
+Requires the `compose_amortize_launch_{rtx,h200}.json` files from A3 (or the copies already in `artifacts/`).
 
 ---
 
@@ -238,7 +238,7 @@ PYTHONPATH=. python compose.py \
 
 ---
 
-## Quick map of shipped data paths
+## Quick map of included data paths
 
 | Path | Role |
 |---|---|
@@ -248,5 +248,5 @@ PYTHONPATH=. python compose.py \
 | `end_end_prediction/data/graphs/` | StableHLO for e2e training |
 | `end_end_prediction/data/e2e_groundtruth/` | Backbone latency labels (RTX, H200, combined) |
 | `end_end_prediction/data/e2e_coverage_graphs/` | StableHLO for `compose.py` |
-| `*/artifacts/*.pt` | Shipped checkpoints |
+| `*/artifacts/*.pt` | Included checkpoints |
 | *(not present)* `**/xla_dumps/` | Raw XLA dumps — collect locally only |

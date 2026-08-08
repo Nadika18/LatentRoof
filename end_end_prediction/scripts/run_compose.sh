@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Compose e2e predictions vs shipped ground truth. Run from end_end_prediction/.
+# Compose e2e predictions vs included ground truth. Run from end_end_prediction/.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 PY="${PYTHON:-python3}"
