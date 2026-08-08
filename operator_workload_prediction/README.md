@@ -1,35 +1,42 @@
 # Operator / block-level workload prediction
 
-Predict latency of StableHLO operator and Transformer-block graphs on an unseen
-(**test**) GPU using only the graph and public hardware specifications.
+Leave-one-GPU-out latency prediction for StableHLO operator and Transformer-block
+graphs. See the repo-root [`README.md`](../README.md) for overview, setup, and datasets.
 
-## Dataset (included under `data/`)
+## Build
 
-| | |
-|---|---|
-| Rows | **6,778** latency measurements |
-| Configs / graphs | **2,593** unique configs · **2,292** unique StableHLO graphs |
-| GPUs | H200 NVL · RTX PRO 6000 · GB10 |
-| Dtypes | FP32, FP16, BF16 |
-| Families (11) | `gemm`, `batchmatmul`, `gelu`, `softmax`, `layernorm`, `residual`, `feedforward`, `attention`, `mha`, `mlp3`, `transformer` |
+```bash
+# from LatentRoof/
+python3 -m venv ../.venv && source ../.venv/bin/activate
+pip install -U pip torch numpy
+cd operator_workload_prediction
+pip install -e .
+```
 
-Rows include measured latency plus optional privileged XLA labels used only as
-training targets. See [`DATA.md`](DATA.md) for conversion / split rules.
+## Train / evaluate
+
+```bash
+bash scripts/run_train_logo.sh
+
+PYTHONPATH=. python -m schedule_free_perf.cli evaluate \
+  data/measurements.jsonl \
+  --hardware-dir hardware \
+  --held-out-hardware nvidia_gb10 \
+  artifacts/gb10_h128.pt
+```
 
 ## Layout
 
-- `schedule_free_perf/` — GNN + hardware MLP + dual-peak roofline model
-- `hardware/` — H200 / RTX PRO 6000 / GB10 resource JSONs
-- `data/measurements.jsonl` + `data/graphs/` — included corpus (no GPU needed)
-- `artifacts/` — mainline `hidden_dim=128` LOGO checkpoints + summary
-- `scripts/run_train_logo.sh` — reproduce leave-one-GPU-out training
-- `DATA.md`, `DESIGN.md`, `LIMITATIONS.md`, `LITERATURE.md`
+| Path | Contents |
+|---|---|
+| `schedule_free_perf/` | GNN + hardware MLP + dual-peak roofline |
+| `hardware/` | H200 / RTX PRO 6000 / GB10 JSON specs |
+| `data/` | `measurements.jsonl` (6,778 rows) + StableHLO graphs |
+| `artifacts/` | `hidden_dim=128` LOGO checkpoints |
+| `scripts/run_train_logo.sh` | Three test-GPU folds |
+| `DATA.md`, `DESIGN.md` | Protocol and model notes |
 
-Full steps: repo-root [`REPRODUCE.md`](../REPRODUCE.md).  
-Raw **XLA dump trees are not included** (labels are already inside `measurements.jsonl`).  
-Optional remasure: [`collection/`](../collection/).
-
-## Quick results (LOGO, $d=128$, mean OOD MAPE)
+## Results (`d=128`)
 
 | Test GPU | OOD MAPE |
 |---|---:|
@@ -37,9 +44,4 @@ Optional remasure: [`collection/`](../collection/).
 | H200 | 14.3% |
 | RTX PRO 6000 | 17.6% |
 
-## Train
-
-```bash
-pip install -e .
-bash scripts/run_train_logo.sh
-```
+More detail: [`../REPRODUCE.md`](../REPRODUCE.md) · optional remasure [`../collection/`](../collection/).
