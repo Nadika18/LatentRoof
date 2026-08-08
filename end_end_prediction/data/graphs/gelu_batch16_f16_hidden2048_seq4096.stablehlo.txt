@@ -1,0 +1,22 @@
+module @jit_gelu_op attributes {mhlo.num_partitions = 1 : i32, mhlo.num_replicas = 1 : i32} {
+  func.func public @main(%arg0: tensor<16x4096x2048xf16>) -> (tensor<16x4096x2048xf16> {jax.result_info = "result"}) {
+    %0 = stablehlo.multiply %arg0, %arg0 : tensor<16x4096x2048xf16>
+    %1 = stablehlo.multiply %0, %arg0 : tensor<16x4096x2048xf16>
+    %cst = stablehlo.constant dense<4.470830e-02> : tensor<f16>
+    %2 = stablehlo.broadcast_in_dim %cst, dims = [] : (tensor<f16>) -> tensor<16x4096x2048xf16>
+    %3 = stablehlo.multiply %2, %1 : tensor<16x4096x2048xf16>
+    %4 = stablehlo.add %arg0, %3 : tensor<16x4096x2048xf16>
+    %cst_0 = stablehlo.constant dense<7.978520e-01> : tensor<f16>
+    %5 = stablehlo.broadcast_in_dim %cst_0, dims = [] : (tensor<f16>) -> tensor<16x4096x2048xf16>
+    %6 = stablehlo.multiply %5, %4 : tensor<16x4096x2048xf16>
+    %7 = stablehlo.tanh %6 : tensor<16x4096x2048xf16>
+    %cst_1 = stablehlo.constant dense<1.000000e+00> : tensor<f16>
+    %8 = stablehlo.broadcast_in_dim %cst_1, dims = [] : (tensor<f16>) -> tensor<16x4096x2048xf16>
+    %9 = stablehlo.add %8, %7 : tensor<16x4096x2048xf16>
+    %cst_2 = stablehlo.constant dense<5.000000e-01> : tensor<f16>
+    %10 = stablehlo.broadcast_in_dim %cst_2, dims = [] : (tensor<f16>) -> tensor<16x4096x2048xf16>
+    %11 = stablehlo.multiply %10, %9 : tensor<16x4096x2048xf16>
+    %12 = stablehlo.multiply %arg0, %11 : tensor<16x4096x2048xf16>
+    return %12 : tensor<16x4096x2048xf16>
+  }
+}

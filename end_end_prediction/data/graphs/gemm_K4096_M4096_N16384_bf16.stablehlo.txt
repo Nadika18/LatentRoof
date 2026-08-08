@@ -1,0 +1,6 @@
+module @jit_gemm attributes {mhlo.num_partitions = 1 : i32, mhlo.num_replicas = 1 : i32} {
+  func.func public @main(%arg0: tensor<4096x4096xbf16>, %arg1: tensor<4096x16384xbf16>) -> (tensor<4096x16384xbf16> {jax.result_info = "result"}) {
+    %0 = stablehlo.dot_general %arg0, %arg1, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<4096x4096xbf16>, tensor<4096x16384xbf16>) -> tensor<4096x16384xbf16>
+    return %0 : tensor<4096x16384xbf16>
+  }
+}

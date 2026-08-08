@@ -1,0 +1,21 @@
+module @jit_softmax attributes {mhlo.num_partitions = 1 : i32, mhlo.num_replicas = 1 : i32} {
+  func.func public @main(%arg0: tensor<16x8192x1024xbf16>) -> (tensor<16x8192x1024xbf16> {jax.result_info = "result"}) {
+    %cst = stablehlo.constant dense<0xFF80> : tensor<bf16>
+    %0 = stablehlo.reduce(%arg0 init: %cst) applies stablehlo.maximum across dimensions = [2] : (tensor<16x8192x1024xbf16>, tensor<bf16>) -> tensor<16x8192xbf16>
+    %cst_0 = stablehlo.constant dense<0xFF80> : tensor<bf16>
+    %1 = stablehlo.broadcast_in_dim %cst_0, dims = [] : (tensor<bf16>) -> tensor<16x8192xbf16>
+    %2 = stablehlo.maximum %1, %0 : tensor<16x8192xbf16>
+    %3 = stablehlo.broadcast_in_dim %2, dims = [0, 1] : (tensor<16x8192xbf16>) -> tensor<16x8192x1xbf16>
+    %4 = stablehlo.broadcast_in_dim %3, dims = [0, 1, 2] : (tensor<16x8192x1xbf16>) -> tensor<16x8192x1024xbf16>
+    %5 = stablehlo.subtract %arg0, %4 : tensor<16x8192x1024xbf16>
+    %6 = stablehlo.exponential %5 : tensor<16x8192x1024xbf16>
+    %7 = stablehlo.convert %6 : (tensor<16x8192x1024xbf16>) -> tensor<16x8192x1024xf32>
+    %cst_1 = stablehlo.constant dense<0.000000e+00> : tensor<f32>
+    %8 = stablehlo.reduce(%7 init: %cst_1) applies stablehlo.add across dimensions = [2] : (tensor<16x8192x1024xf32>, tensor<f32>) -> tensor<16x8192xf32>
+    %9 = stablehlo.broadcast_in_dim %8, dims = [0, 1] : (tensor<16x8192xf32>) -> tensor<16x8192x1xf32>
+    %10 = stablehlo.convert %9 : (tensor<16x8192x1xf32>) -> tensor<16x8192x1xbf16>
+    %11 = stablehlo.broadcast_in_dim %10, dims = [0, 1, 2] : (tensor<16x8192x1xbf16>) -> tensor<16x8192x1024xbf16>
+    %12 = stablehlo.divide %6, %11 : tensor<16x8192x1024xbf16>
+    return %12 : tensor<16x8192x1024xbf16>
+  }
+}

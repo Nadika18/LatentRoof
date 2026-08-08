@@ -4,20 +4,18 @@ __pycache__/
 *.egg-info/
 .venv/
 .venv_train/
+.venv_collect/
 
-# Data (keep out of git)
-data/
-**/measurements.jsonl
-**/manifest*.json
-**/*_evaluation.json
+# Local collection scratch (do not commit re-runs / XLA dumps)
+collection/data/
+collection/xla_dump*/
+collection/.xla_tmp/
 **/xla_dump*/
 **/.xla_tmp/
 
-# Logs / notebooks / OS
+# Large eval dumps / logs / notebooks
+**/*_evaluation.json
 *.log
 .ipynb_checkpoints/
 .DS_Store
 *.swp
-
-# Optional local scratch
-github_clean_push/

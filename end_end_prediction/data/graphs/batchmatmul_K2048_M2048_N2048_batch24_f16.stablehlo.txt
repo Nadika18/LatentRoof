@@ -1,0 +1,6 @@
+module @jit_batchmatmul attributes {mhlo.num_partitions = 1 : i32, mhlo.num_replicas = 1 : i32} {
+  func.func public @main(%arg0: tensor<24x2048x2048xf16>, %arg1: tensor<24x2048x2048xf16>) -> (tensor<24x2048x2048xf16> {jax.result_info = "result"}) {
+    %0 = stablehlo.dot_general %arg0, %arg1, batching_dims = [0] x [0], contracting_dims = [2] x [1], precision = [DEFAULT, DEFAULT] : (tensor<24x2048x2048xf16>, tensor<24x2048x2048xf16>) -> tensor<24x2048x2048xf16>
+    return %0 : tensor<24x2048x2048xf16>
+  }
+}

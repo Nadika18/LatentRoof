@@ -1,0 +1,45 @@
+module @jit_mha attributes {mhlo.num_partitions = 1 : i32, mhlo.num_replicas = 1 : i32} {
+  func.func public @main(%arg0: tensor<16x2048x1280xbf16>, %arg1: tensor<1280x1280xbf16>, %arg2: tensor<1280x1280xbf16>, %arg3: tensor<1280x1280xbf16>, %arg4: tensor<1280x1280xbf16>) -> (tensor<16x2048x1280xbf16> {jax.result_info = "result"}) {
+    %0 = stablehlo.reshape %arg0 : (tensor<16x2048x1280xbf16>) -> tensor<32768x1280xbf16>
+    %1 = stablehlo.dot_general %0, %arg1, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<32768x1280xbf16>, tensor<1280x1280xbf16>) -> tensor<32768x1280xbf16>
+    %2 = stablehlo.reshape %1 : (tensor<32768x1280xbf16>) -> tensor<16x2048x20x64xbf16>
+    %3 = stablehlo.transpose %2, dims = [0, 2, 1, 3] : (tensor<16x2048x20x64xbf16>) -> tensor<16x20x2048x64xbf16>
+    %4 = stablehlo.reshape %arg0 : (tensor<16x2048x1280xbf16>) -> tensor<32768x1280xbf16>
+    %5 = stablehlo.dot_general %4, %arg2, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<32768x1280xbf16>, tensor<1280x1280xbf16>) -> tensor<32768x1280xbf16>
+    %6 = stablehlo.reshape %5 : (tensor<32768x1280xbf16>) -> tensor<16x2048x20x64xbf16>
+    %7 = stablehlo.transpose %6, dims = [0, 2, 1, 3] : (tensor<16x2048x20x64xbf16>) -> tensor<16x20x2048x64xbf16>
+    %8 = stablehlo.reshape %arg0 : (tensor<16x2048x1280xbf16>) -> tensor<32768x1280xbf16>
+    %9 = stablehlo.dot_general %8, %arg3, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<32768x1280xbf16>, tensor<1280x1280xbf16>) -> tensor<32768x1280xbf16>
+    %10 = stablehlo.reshape %9 : (tensor<32768x1280xbf16>) -> tensor<16x2048x20x64xbf16>
+    %11 = stablehlo.transpose %10, dims = [0, 2, 1, 3] : (tensor<16x2048x20x64xbf16>) -> tensor<16x20x2048x64xbf16>
+    %12 = stablehlo.transpose %7, dims = [0, 1, 3, 2] : (tensor<16x20x2048x64xbf16>) -> tensor<16x20x64x2048xbf16>
+    %13 = stablehlo.dot_general %3, %12, batching_dims = [0, 1] x [0, 1], contracting_dims = [3] x [2], precision = [DEFAULT, DEFAULT] : (tensor<16x20x2048x64xbf16>, tensor<16x20x64x2048xbf16>) -> tensor<16x20x2048x2048xbf16>
+    %cst = stablehlo.constant dense<6.400000e+01> : tensor<f32>
+    %14 = stablehlo.sqrt %cst : tensor<f32>
+    %15 = stablehlo.convert %14 : (tensor<f32>) -> tensor<bf16>
+    %16 = stablehlo.broadcast_in_dim %15, dims = [] : (tensor<bf16>) -> tensor<16x20x2048x2048xbf16>
+    %17 = stablehlo.divide %13, %16 : tensor<16x20x2048x2048xbf16>
+    %cst_0 = stablehlo.constant dense<0xFF80> : tensor<bf16>
+    %18 = stablehlo.reduce(%17 init: %cst_0) applies stablehlo.maximum across dimensions = [3] : (tensor<16x20x2048x2048xbf16>, tensor<bf16>) -> tensor<16x20x2048xbf16>
+    %cst_1 = stablehlo.constant dense<0xFF80> : tensor<bf16>
+    %19 = stablehlo.broadcast_in_dim %cst_1, dims = [] : (tensor<bf16>) -> tensor<16x20x2048xbf16>
+    %20 = stablehlo.maximum %19, %18 : tensor<16x20x2048xbf16>
+    %21 = stablehlo.broadcast_in_dim %20, dims = [0, 1, 2] : (tensor<16x20x2048xbf16>) -> tensor<16x20x2048x1xbf16>
+    %22 = stablehlo.broadcast_in_dim %21, dims = [0, 1, 2, 3] : (tensor<16x20x2048x1xbf16>) -> tensor<16x20x2048x2048xbf16>
+    %23 = stablehlo.subtract %17, %22 : tensor<16x20x2048x2048xbf16>
+    %24 = stablehlo.exponential %23 : tensor<16x20x2048x2048xbf16>
+    %25 = stablehlo.convert %24 : (tensor<16x20x2048x2048xbf16>) -> tensor<16x20x2048x2048xf32>
+    %cst_2 = stablehlo.constant dense<0.000000e+00> : tensor<f32>
+    %26 = stablehlo.reduce(%25 init: %cst_2) applies stablehlo.add across dimensions = [3] : (tensor<16x20x2048x2048xf32>, tensor<f32>) -> tensor<16x20x2048xf32>
+    %27 = stablehlo.broadcast_in_dim %26, dims = [0, 1, 2] : (tensor<16x20x2048xf32>) -> tensor<16x20x2048x1xf32>
+    %28 = stablehlo.convert %27 : (tensor<16x20x2048x1xf32>) -> tensor<16x20x2048x1xbf16>
+    %29 = stablehlo.broadcast_in_dim %28, dims = [0, 1, 2, 3] : (tensor<16x20x2048x1xbf16>) -> tensor<16x20x2048x2048xbf16>
+    %30 = stablehlo.divide %24, %29 : tensor<16x20x2048x2048xbf16>
+    %31 = stablehlo.dot_general %30, %11, batching_dims = [0, 1] x [0, 1], contracting_dims = [3] x [2], precision = [DEFAULT, DEFAULT] : (tensor<16x20x2048x2048xbf16>, tensor<16x20x2048x64xbf16>) -> tensor<16x20x2048x64xbf16>
+    %32 = stablehlo.transpose %31, dims = [0, 2, 1, 3] : (tensor<16x20x2048x64xbf16>) -> tensor<16x2048x20x64xbf16>
+    %33 = stablehlo.reshape %32 : (tensor<16x2048x20x64xbf16>) -> tensor<32768x1280xbf16>
+    %34 = stablehlo.dot_general %33, %arg4, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<32768x1280xbf16>, tensor<1280x1280xbf16>) -> tensor<32768x1280xbf16>
+    %35 = stablehlo.reshape %34 : (tensor<32768x1280xbf16>) -> tensor<16x2048x1280xbf16>
+    return %35 : tensor<16x2048x1280xbf16>
+  }
+}

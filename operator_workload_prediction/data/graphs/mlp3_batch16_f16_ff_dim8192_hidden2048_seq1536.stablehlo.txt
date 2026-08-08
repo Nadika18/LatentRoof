@@ -1,0 +1,51 @@
+module @jit_mlp3 attributes {mhlo.num_partitions = 1 : i32, mhlo.num_replicas = 1 : i32} {
+  func.func public @main(%arg0: tensor<24576x2048xf16>, %arg1: tensor<2048x8192xf16>, %arg2: tensor<8192xf16>, %arg3: tensor<8192x8192xf16>, %arg4: tensor<8192xf16>, %arg5: tensor<8192x2048xf16>, %arg6: tensor<2048xf16>) -> (tensor<24576x2048xf16> {jax.result_info = "result"}) {
+    %0 = stablehlo.dot_general %arg0, %arg1, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<24576x2048xf16>, tensor<2048x8192xf16>) -> tensor<24576x8192xf16>
+    %1 = stablehlo.broadcast_in_dim %arg2, dims = [1] : (tensor<8192xf16>) -> tensor<1x8192xf16>
+    %2 = stablehlo.broadcast_in_dim %1, dims = [0, 1] : (tensor<1x8192xf16>) -> tensor<24576x8192xf16>
+    %3 = stablehlo.add %0, %2 : tensor<24576x8192xf16>
+    %4 = stablehlo.multiply %3, %3 : tensor<24576x8192xf16>
+    %5 = stablehlo.multiply %4, %3 : tensor<24576x8192xf16>
+    %cst = stablehlo.constant dense<4.470830e-02> : tensor<f16>
+    %6 = stablehlo.broadcast_in_dim %cst, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %7 = stablehlo.multiply %6, %5 : tensor<24576x8192xf16>
+    %8 = stablehlo.add %3, %7 : tensor<24576x8192xf16>
+    %cst_0 = stablehlo.constant dense<7.978520e-01> : tensor<f16>
+    %9 = stablehlo.broadcast_in_dim %cst_0, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %10 = stablehlo.multiply %9, %8 : tensor<24576x8192xf16>
+    %11 = stablehlo.tanh %10 : tensor<24576x8192xf16>
+    %cst_1 = stablehlo.constant dense<1.000000e+00> : tensor<f16>
+    %12 = stablehlo.broadcast_in_dim %cst_1, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %13 = stablehlo.add %12, %11 : tensor<24576x8192xf16>
+    %cst_2 = stablehlo.constant dense<5.000000e-01> : tensor<f16>
+    %14 = stablehlo.broadcast_in_dim %cst_2, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %15 = stablehlo.multiply %14, %13 : tensor<24576x8192xf16>
+    %16 = stablehlo.multiply %3, %15 : tensor<24576x8192xf16>
+    %17 = stablehlo.dot_general %16, %arg3, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<24576x8192xf16>, tensor<8192x8192xf16>) -> tensor<24576x8192xf16>
+    %18 = stablehlo.broadcast_in_dim %arg4, dims = [1] : (tensor<8192xf16>) -> tensor<1x8192xf16>
+    %19 = stablehlo.broadcast_in_dim %18, dims = [0, 1] : (tensor<1x8192xf16>) -> tensor<24576x8192xf16>
+    %20 = stablehlo.add %17, %19 : tensor<24576x8192xf16>
+    %21 = stablehlo.multiply %20, %20 : tensor<24576x8192xf16>
+    %22 = stablehlo.multiply %21, %20 : tensor<24576x8192xf16>
+    %cst_3 = stablehlo.constant dense<4.470830e-02> : tensor<f16>
+    %23 = stablehlo.broadcast_in_dim %cst_3, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %24 = stablehlo.multiply %23, %22 : tensor<24576x8192xf16>
+    %25 = stablehlo.add %20, %24 : tensor<24576x8192xf16>
+    %cst_4 = stablehlo.constant dense<7.978520e-01> : tensor<f16>
+    %26 = stablehlo.broadcast_in_dim %cst_4, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %27 = stablehlo.multiply %26, %25 : tensor<24576x8192xf16>
+    %28 = stablehlo.tanh %27 : tensor<24576x8192xf16>
+    %cst_5 = stablehlo.constant dense<1.000000e+00> : tensor<f16>
+    %29 = stablehlo.broadcast_in_dim %cst_5, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %30 = stablehlo.add %29, %28 : tensor<24576x8192xf16>
+    %cst_6 = stablehlo.constant dense<5.000000e-01> : tensor<f16>
+    %31 = stablehlo.broadcast_in_dim %cst_6, dims = [] : (tensor<f16>) -> tensor<24576x8192xf16>
+    %32 = stablehlo.multiply %31, %30 : tensor<24576x8192xf16>
+    %33 = stablehlo.multiply %20, %32 : tensor<24576x8192xf16>
+    %34 = stablehlo.dot_general %33, %arg5, contracting_dims = [1] x [0], precision = [DEFAULT, DEFAULT] : (tensor<24576x8192xf16>, tensor<8192x2048xf16>) -> tensor<24576x2048xf16>
+    %35 = stablehlo.broadcast_in_dim %arg6, dims = [1] : (tensor<2048xf16>) -> tensor<1x2048xf16>
+    %36 = stablehlo.broadcast_in_dim %35, dims = [0, 1] : (tensor<1x2048xf16>) -> tensor<24576x2048xf16>
+    %37 = stablehlo.add %34, %36 : tensor<24576x2048xf16>
+    return %37 : tensor<24576x2048xf16>
+  }
+}
