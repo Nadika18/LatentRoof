@@ -10,9 +10,9 @@ Schedule-free cross-GPU latency prediction from **StableHLO + public hardware sp
 | [`collection/`](collection/) | Optional live-GPU measurement scripts |
 | [`REPRODUCE.md`](REPRODUCE.md) | **Full step-by-step reproduction** |
 
-## What is shipped vs not shipped
+## What is included in this repo ?
 
-### Shipped (enough to train / evaluate / compose **without a GPU**)
+### Included (enough to train / evaluate / compose **without a GPU**)
 
 - Model code, hardware JSONs, train/compose scripts
 - Mainline `hidden_dim=128` checkpoints + compose / poster artifacts
@@ -20,7 +20,7 @@ Schedule-free cross-GPU latency prediction from **StableHLO + public hardware sp
 - `data/graphs/*.stablehlo.txt` — StableHLO sources used as model inputs
 - End-to-end: backbone ground truth + coverage StableHLO graphs for composition
 
-### Not shipped
+### Included
 
 - **Raw XLA compiler dump trees** (`xla_dumps/`, multi‑GB per GPU run)
 - Local venvs, scratch TMPDIR trees, and collection re-run outputs under `collection/data/`
