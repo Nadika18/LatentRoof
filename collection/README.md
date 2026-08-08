@@ -1,7 +1,22 @@
 # GPU data collection
 
 Scripts to **re-measure** latencies on a live NVIDIA GPU (JAX / XLA).
-Shipped measurements under each experiment folder already let you train without a GPU.
+
+If you only want to train / compose, skip this folder and use the shipped
+`data/` under each experiment package — see [`../REPRODUCE.md`](../REPRODUCE.md).
+
+## XLA dumps (local only — not in the GitHub repo)
+
+Collection sets `XLA_FLAGS=--xla_dump_to=…` so XLA writes compiler IR/text dumps.
+Those dumps are:
+
+1. Parsed **during collection** into per-row labels (kernel counts, DRAM, fusion, …)
+2. Optionally copied under `data/<run>/xla_dumps/` for your own auditing
+
+**They are not published in this repository** (multi‑GB). Training and compose use
+StableHLO graphs + latencies + the labels already stored in `dataset.json` /
+`measurements.jsonl`. After a successful collect you can delete `xla_dumps/` and the
+temporary dump directory to free disk.
 
 ## Dependencies
 
@@ -24,7 +39,8 @@ Locks clocks / persistence mode when supported; warns if the GPU is busy.
 
 ## Operator / block sweep (`collect_data.py`)
 
-Full balanced grid (~2k configs/GPU). Writes `data/<name>/dataset.json` + `graphs/`.
+Full balanced grid (~2k configs/GPU). Writes `data/<name>/dataset.json` + `graphs/`
+(+ local `xla_dumps/`).
 
 ```bash
 cd collection
@@ -37,7 +53,7 @@ python collect_data.py --output-dir data/my_gpu_balanced
 
 Useful flags: `--max-configs N`, `--workload gemm`, `--n-trials 2`, `--n-runs 100`.
 
-Convert a collected dataset into a training manifest (from an experiment folder):
+Convert into a training manifest (torch env; from an experiment folder):
 
 ```bash
 cd ../operator_workload_prediction
@@ -47,7 +63,8 @@ PYTHONPATH=. python -m schedule_free_perf.cli convert-data \
   --audit-output artifacts/audit_new.json
 ```
 
-Then either replace `data/measurements.jsonl` + copy graphs, or merge manifests.
+Leave the collection `graphs/` directory in place (manifest paths point there), or
+copy graphs next to a rewritten manifest. Full train commands: [`../REPRODUCE.md`](../REPRODUCE.md).
 
 ## End-to-end coverage blocks (`collect_e2e_coverage.py`)
 
@@ -64,7 +81,8 @@ python collect_e2e_coverage.py
 
 ## End-to-end backbone ground truth (`measure_e2e_groundtruth.py`)
 
-Full N-layer GPT-2 / BERT forward latency (for compose grading).
+Full N-layer GPT-2 / BERT forward latency (for compose grading). Does not require
+XLA dump flags (no privileged labels).
 
 ```bash
 cd collection

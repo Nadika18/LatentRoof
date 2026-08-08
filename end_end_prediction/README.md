@@ -18,7 +18,9 @@ blocks so those shapes are in-distribution.
 - `scripts/run_train.sh`, `scripts/run_compose.sh`
 - `artifacts/` — checkpoints, compose JSON, poster PNGs
 
-See also the repo-root [`REPRODUCE.md`](../REPRODUCE.md) and [`collection/`](../collection/).
+Full steps: repo-root [`REPRODUCE.md`](../REPRODUCE.md).  
+Raw **XLA dump trees are not shipped** (labels are already inside `measurements.jsonl`).  
+Optional remasure: [`collection/`](../collection/).
 
 ## Compose modes
 

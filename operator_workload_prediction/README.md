@@ -12,7 +12,9 @@ GPU using only the graph and public hardware specifications.
 - `scripts/run_train_logo.sh` — reproduce leave-one-GPU-out training
 - `DATA.md`, `DESIGN.md`, `LIMITATIONS.md`, `LITERATURE.md`
 
-See also the repo-root [`REPRODUCE.md`](../REPRODUCE.md) and [`collection/`](../collection/).
+Full steps: repo-root [`REPRODUCE.md`](../REPRODUCE.md).  
+Raw **XLA dump trees are not shipped** (labels are already inside `measurements.jsonl`).  
+Optional remasure: [`collection/`](../collection/).
 
 ## Quick results (LOGO, $d=128$, mean OOD MAPE)
 
