@@ -1,0 +1,21 @@
+{
+  "bf16_tflops": 500.0,
+  "compute_units": 188,
+  "estimated_fields": [
+    "launch_overhead_us"
+  ],
+  "execution_width": 32,
+  "family": "nvidia_blackwell",
+  "fp16_tflops": 500.0,
+  "fp32_tflops": 120.0,
+  "tf32_tflops": 234.0,
+  "hardware_id": "nvidia_rtx_pro_6000",
+  "int8_tops": 1000.0,
+  "l2_cache_mb": 96.0,
+  "launch_overhead_us": 5.0,
+  "local_memory_kb": 228.0,
+  "max_threads_per_unit": 2048,
+  "memory_bandwidth_gbps": 1597.0,
+  "memory_capacity_gb": 96.0,
+  "source": "RTX PRO 6000 Blackwell Server Edition: FP32 120 and TF32 234 from NVIDIA/Lenovo datasheets. FP16/BF16 dense set to 500 (= half of marketing 1 PFLOP, consistent with ~2x TF32 and no-sparsity policy)."
+}

@@ -1,0 +1,455 @@
+{
+  "protocol": "leave-one-GPU-out, seed 29, Ablation D physics, hidden_dim sweep",
+  "folds": {
+    "gb10_h64": {
+      "holdout": "gb10",
+      "hidden_dim": 64,
+      "id": {
+        "n": 477,
+        "mean": 5.1891,
+        "median": 2.8362,
+        "p90": 12.0652
+      },
+      "ood": {
+        "n": 1609,
+        "mean": 14.7284,
+        "median": 15.0201,
+        "p90": 24.2198
+      },
+      "ood_by_family": {
+        "attention": {
+          "n": 183,
+          "mean": 21.8244,
+          "median": 22.6656
+        },
+        "batchmatmul": {
+          "n": 74,
+          "mean": 12.7096,
+          "median": 12.0481
+        },
+        "feedforward": {
+          "n": 175,
+          "mean": 10.8386,
+          "median": 10.5304
+        },
+        "gelu": {
+          "n": 117,
+          "mean": 16.9479,
+          "median": 15.9365
+        },
+        "gemm": {
+          "n": 13,
+          "mean": 6.9906,
+          "median": 5.8312
+        },
+        "layernorm": {
+          "n": 186,
+          "mean": 16.1806,
+          "median": 15.0681
+        },
+        "mha": {
+          "n": 219,
+          "mean": 19.7372,
+          "median": 18.5885
+        },
+        "mlp3": {
+          "n": 188,
+          "mean": 7.5644,
+          "median": 6.8266
+        },
+        "residual": {
+          "n": 113,
+          "mean": 8.2757,
+          "median": 6.9388
+        },
+        "softmax": {
+          "n": 115,
+          "mean": 18.0499,
+          "median": 16.8262
+        },
+        "transformer": {
+          "n": 226,
+          "mean": 13.3982,
+          "median": 12.9141
+        }
+      },
+      "checkpoint": "cursor_ablation_dual_peak_D/artifacts/gb10_dual_peak_D.pt",
+      "evaluation": "cursor_ablation_dual_peak_D/artifacts/gb10_dual_peak_D_evaluation.json"
+    },
+    "gb10_h128": {
+      "holdout": "gb10",
+      "hidden_dim": 128,
+      "id": {
+        "n": 477,
+        "mean": 4.9836,
+        "median": 3.0913,
+        "p90": 10.8124
+      },
+      "ood": {
+        "n": 1609,
+        "mean": 12.2154,
+        "median": 11.8176,
+        "p90": 21.74
+      },
+      "ood_by_family": {
+        "attention": {
+          "n": 183,
+          "mean": 17.8854,
+          "median": 16.4277
+        },
+        "batchmatmul": {
+          "n": 74,
+          "mean": 11.4519,
+          "median": 9.9714
+        },
+        "feedforward": {
+          "n": 175,
+          "mean": 9.6894,
+          "median": 9.1714
+        },
+        "gelu": {
+          "n": 117,
+          "mean": 16.8375,
+          "median": 15.763
+        },
+        "gemm": {
+          "n": 13,
+          "mean": 6.6065,
+          "median": 6.2973
+        },
+        "layernorm": {
+          "n": 186,
+          "mean": 13.6804,
+          "median": 11.8667
+        },
+        "mha": {
+          "n": 219,
+          "mean": 10.8811,
+          "median": 8.7582
+        },
+        "mlp3": {
+          "n": 188,
+          "mean": 7.3053,
+          "median": 6.0874
+        },
+        "residual": {
+          "n": 113,
+          "mean": 7.7272,
+          "median": 6.9569
+        },
+        "softmax": {
+          "n": 115,
+          "mean": 17.3412,
+          "median": 16.2539
+        },
+        "transformer": {
+          "n": 226,
+          "mean": 11.5677,
+          "median": 10.1143
+        }
+      },
+      "checkpoint": "cursor_ablation_dual_peak_D/artifacts/gb10_dual_peak_D_h128.pt",
+      "evaluation": "cursor_ablation_dual_peak_D/artifacts/gb10_dual_peak_D_h128_evaluation.json"
+    },
+    "h200_h64": {
+      "holdout": "h200",
+      "hidden_dim": 64,
+      "id": {
+        "n": 387,
+        "mean": 5.3055,
+        "median": 3.654,
+        "p90": 11.7729
+      },
+      "ood": {
+        "n": 2593,
+        "mean": 16.5903,
+        "median": 14.505,
+        "p90": 33.7354
+      },
+      "ood_by_family": {
+        "attention": {
+          "n": 240,
+          "mean": 21.7441,
+          "median": 23.6222
+        },
+        "batchmatmul": {
+          "n": 240,
+          "mean": 8.8489,
+          "median": 7.4238
+        },
+        "feedforward": {
+          "n": 240,
+          "mean": 5.5541,
+          "median": 4.5077
+        },
+        "gelu": {
+          "n": 240,
+          "mean": 30.1815,
+          "median": 34.4672
+        },
+        "gemm": {
+          "n": 205,
+          "mean": 9.3076,
+          "median": 8.8711
+        },
+        "layernorm": {
+          "n": 240,
+          "mean": 24.5152,
+          "median": 23.6907
+        },
+        "mha": {
+          "n": 229,
+          "mean": 21.8088,
+          "median": 22.0653
+        },
+        "mlp3": {
+          "n": 240,
+          "mean": 5.1501,
+          "median": 4.239
+        },
+        "residual": {
+          "n": 240,
+          "mean": 8.3294,
+          "median": 7.8466
+        },
+        "softmax": {
+          "n": 240,
+          "mean": 27.8847,
+          "median": 22.7617
+        },
+        "transformer": {
+          "n": 239,
+          "mean": 18.3531,
+          "median": 16.1482
+        }
+      },
+      "checkpoint": "cursor_ablation_dual_peak_D/artifacts/h200_dual_peak_D.pt",
+      "evaluation": "cursor_ablation_dual_peak_D/artifacts/h200_dual_peak_D_evaluation.json"
+    },
+    "h200_h128": {
+      "holdout": "h200",
+      "hidden_dim": 128,
+      "id": {
+        "n": 387,
+        "mean": 4.0186,
+        "median": 2.6868,
+        "p90": 8.6209
+      },
+      "ood": {
+        "n": 2593,
+        "mean": 14.2818,
+        "median": 12.5212,
+        "p90": 25.9113
+      },
+      "ood_by_family": {
+        "attention": {
+          "n": 240,
+          "mean": 18.6727,
+          "median": 19.8176
+        },
+        "batchmatmul": {
+          "n": 240,
+          "mean": 11.8173,
+          "median": 11.0569
+        },
+        "feedforward": {
+          "n": 240,
+          "mean": 7.33,
+          "median": 7.3592
+        },
+        "gelu": {
+          "n": 240,
+          "mean": 17.4079,
+          "median": 19.6367
+        },
+        "gemm": {
+          "n": 205,
+          "mean": 14.7207,
+          "median": 12.4636
+        },
+        "layernorm": {
+          "n": 240,
+          "mean": 21.7413,
+          "median": 22.8114
+        },
+        "mha": {
+          "n": 229,
+          "mean": 18.1368,
+          "median": 17.279
+        },
+        "mlp3": {
+          "n": 240,
+          "mean": 7.247,
+          "median": 6.2092
+        },
+        "residual": {
+          "n": 240,
+          "mean": 6.026,
+          "median": 5.6768
+        },
+        "softmax": {
+          "n": 240,
+          "mean": 16.8432,
+          "median": 12.6609
+        },
+        "transformer": {
+          "n": 239,
+          "mean": 17.4107,
+          "median": 17.1071
+        }
+      },
+      "checkpoint": "cursor_ablation_dual_peak_D/artifacts/h200_dual_peak_D_h128.pt",
+      "evaluation": "cursor_ablation_dual_peak_D/artifacts/h200_dual_peak_D_h128_evaluation.json"
+    },
+    "rtx_h64": {
+      "holdout": "rtx",
+      "hidden_dim": 64,
+      "id": {
+        "n": 388,
+        "mean": 9.5269,
+        "median": 6.7397,
+        "p90": 21.3856
+      },
+      "ood": {
+        "n": 2576,
+        "mean": 16.4938,
+        "median": 13.1338,
+        "p90": 35.1948
+      },
+      "ood_by_family": {
+        "attention": {
+          "n": 240,
+          "mean": 25.4444,
+          "median": 25.9062
+        },
+        "batchmatmul": {
+          "n": 240,
+          "mean": 8.4627,
+          "median": 6.263
+        },
+        "feedforward": {
+          "n": 240,
+          "mean": 5.5316,
+          "median": 3.1449
+        },
+        "gelu": {
+          "n": 240,
+          "mean": 22.0564,
+          "median": 21.9325
+        },
+        "gemm": {
+          "n": 205,
+          "mean": 11.2425,
+          "median": 10.1905
+        },
+        "layernorm": {
+          "n": 238,
+          "mean": 26.2487,
+          "median": 27.0282
+        },
+        "mha": {
+          "n": 216,
+          "mean": 25.3307,
+          "median": 26.1748
+        },
+        "mlp3": {
+          "n": 240,
+          "mean": 5.2423,
+          "median": 3.3732
+        },
+        "residual": {
+          "n": 240,
+          "mean": 5.9821,
+          "median": 4.7406
+        },
+        "softmax": {
+          "n": 239,
+          "mean": 28.0648,
+          "median": 27.4766
+        },
+        "transformer": {
+          "n": 238,
+          "mean": 18.0862,
+          "median": 16.9073
+        }
+      },
+      "checkpoint": "cursor_ablation_dual_peak_D/artifacts/rtx_dual_peak_D.pt",
+      "evaluation": "cursor_ablation_dual_peak_D/artifacts/rtx_dual_peak_D_evaluation.json"
+    },
+    "rtx_h128": {
+      "holdout": "rtx",
+      "hidden_dim": 128,
+      "id": {
+        "n": 388,
+        "mean": 7.222,
+        "median": 4.6447,
+        "p90": 16.7603
+      },
+      "ood": {
+        "n": 2576,
+        "mean": 17.6073,
+        "median": 14.5627,
+        "p90": 40.2856
+      },
+      "ood_by_family": {
+        "attention": {
+          "n": 240,
+          "mean": 22.9273,
+          "median": 21.6053
+        },
+        "batchmatmul": {
+          "n": 240,
+          "mean": 11.9755,
+          "median": 10.5101
+        },
+        "feedforward": {
+          "n": 240,
+          "mean": 5.2003,
+          "median": 4.3996
+        },
+        "gelu": {
+          "n": 240,
+          "mean": 30.3317,
+          "median": 36.6309
+        },
+        "gemm": {
+          "n": 205,
+          "mean": 13.6502,
+          "median": 13.7895
+        },
+        "layernorm": {
+          "n": 238,
+          "mean": 23.4954,
+          "median": 23.1269
+        },
+        "mha": {
+          "n": 216,
+          "mean": 21.211,
+          "median": 19.5081
+        },
+        "mlp3": {
+          "n": 240,
+          "mean": 5.8375,
+          "median": 4.3148
+        },
+        "residual": {
+          "n": 240,
+          "mean": 5.2051,
+          "median": 4.3876
+        },
+        "softmax": {
+          "n": 239,
+          "mean": 24.8975,
+          "median": 22.5487
+        },
+        "transformer": {
+          "n": 238,
+          "mean": 28.9054,
+          "median": 26.4765
+        }
+      },
+      "checkpoint": "cursor_ablation_dual_peak_D/artifacts/rtx_dual_peak_D_h128.pt",
+      "evaluation": "cursor_ablation_dual_peak_D/artifacts/rtx_dual_peak_D_h128_evaluation.json"
+    }
+  }
+}

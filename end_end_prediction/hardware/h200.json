@@ -1,0 +1,19 @@
+{
+  "bf16_tflops": 836.0,
+  "compute_units": 132,
+  "estimated_fields": ["launch_overhead_us"],
+  "execution_width": 32,
+  "family": "nvidia_hopper",
+  "fp16_tflops": 836.0,
+  "fp32_tflops": 60.0,
+  "tf32_tflops": 418.0,
+  "hardware_id": "nvidia_h200",
+  "int8_tops": 1570.0,
+  "l2_cache_mb": 50.0,
+  "launch_overhead_us": 5.0,
+  "local_memory_kb": 228.0,
+  "max_threads_per_unit": 2048,
+  "memory_bandwidth_gbps": 4800.0,
+  "memory_capacity_gb": 141.0,
+  "source": "H200 NVL dense peaks from Lenovo/NVIDIA tables (without sparsity). Dataset gpu_name=NVIDIA H200 NVL. Sparse marketing would be TF32 835 / FP16 1671."
+}

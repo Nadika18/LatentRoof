@@ -1,0 +1,40 @@
+{
+  "cross_hardware_hlo_mismatches": 0,
+  "duplicate_device_workloads": 67,
+  "excessive_cv": 0,
+  "invalid_latency": 0,
+  "missing_hlo": 0,
+  "rows_by_hardware": {
+    "nvidia_gb10": 1609,
+    "nvidia_h200": 3136,
+    "nvidia_rtx_pro_6000": 3119
+  },
+  "rows_by_workload": {
+    "attention": 663,
+    "batchmatmul": 554,
+    "feedforward": 799,
+    "gelu": 737,
+    "gemm": 423,
+    "layernorm": 808,
+    "mha": 792,
+    "mlp3": 784,
+    "residual": 737,
+    "softmax": 734,
+    "transformer": 833
+  },
+  "shared_workloads_across_devices": 3135,
+  "source_datasets": [
+    "/home/nadika/Nadika/stable_hlo_tinkering/data/rtxpro6000_balanced_20260722_222649/dataset.json",
+    "/home/nadika/Nadika/stable_hlo_tinkering/data/h200_balanced_20260723_174421/dataset.json",
+    "/home/nadika/Nadika/stable_hlo_tinkering/data/gb10_clean_2/dataset.json",
+    "/home/nadika/Nadika/stable_hlo_tinkering/data/e2e_coverage_20260806_170626/dataset.json",
+    "/home/nadika/Nadika/stable_hlo_tinkering/data/e2e_coverage_20260806_170111/dataset.json"
+  ],
+  "source_rows": 7931,
+  "stablehlo_parse_errors": 0,
+  "unknown_hardware": 0,
+  "valid_rows": 7864,
+  "warnings": [
+    "GB10 measurements are distribution-shifted relative to datacenter GPUs; report results separately and retain uncertainty."
+  ]
+}

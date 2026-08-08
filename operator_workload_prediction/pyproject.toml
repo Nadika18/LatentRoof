@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "schedule-free-perf"
+version = "0.1.0"
+description = "Schedule-free StableHLO cross-GPU latency predictor"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.1"]
+
+[project.scripts]
+schedule-free-perf = "schedule_free_perf.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["schedule_free_perf*"]
+

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.venv_train/
+
+# Data (keep out of git)
+data/
+**/measurements.jsonl
+**/manifest*.json
+**/*_evaluation.json
+**/xla_dump*/
+**/.xla_tmp/
+
+# Logs / notebooks / OS
+*.log
+.ipynb_checkpoints/
+.DS_Store
+*.swp
+
+# Optional local scratch
+github_clean_push/
