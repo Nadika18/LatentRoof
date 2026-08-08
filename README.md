@@ -1,4 +1,5 @@
-# LatentRoof
+# LatentRoof - An Analytical-ML framework for Cross-architecture Performance prediction from StableHLO graph
+
 
 **Cross-architecture latency prediction from StableHLO + public hardware specs.**
 
